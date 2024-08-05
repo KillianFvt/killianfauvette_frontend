@@ -1,26 +1,24 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import {CDNImage} from "./components/image/CDNImage";
 
-function App() {
-  return (
+const API_URL: string = process.env.REACT_APP_API_URL!;
+const BEARER_TOKEN: string = process.env.REACT_APP_BEARER_TOKEN!;
+
+const App = () => (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+        <header className="App-header">
+            <h1>CDN Image</h1>
+            <CDNImage
+                url={"https://cdn.killianfauvette.fr/paris_flower.jpg"}
+                name={"paris_flower"}
+            />
+        </header>
     </div>
-  );
-}
+);
 
-export default App;
+export {
+    App,
+    API_URL,
+    BEARER_TOKEN,
+};
