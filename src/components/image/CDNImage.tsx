@@ -44,9 +44,14 @@ export const CDNImage = (imageProps: CDNImageProps) => {
         return <div>Loading...</div>;
     }
 
+    const displayImage = URL.createObjectURL(image);
+
     return (
         <div className={"CDNImage"}>
-            <img alt={""} src={URL.createObjectURL(image)}/>
+            <a download={imageProps.name} href={displayImage}>
+                <img alt={""} src={displayImage}/>
+            </a>
+            <p>{imageProps.name}</p>
         </div>
     );
 };
