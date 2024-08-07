@@ -1,9 +1,10 @@
-import '../../styles/layout/Header.css';
+import './Header.css';
 import {useUser} from "../../providers/UserProvider";
+import {User} from "../../types/UserType";
 
 export const Header = () => {
 
-    const { user} = useUser();
+    const { user }: { user: User | null } = useUser();
 
     return (
         <header>

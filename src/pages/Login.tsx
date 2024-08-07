@@ -1,5 +1,10 @@
+import {LoginBlock} from "../components/auth/LoginBlock/LoginBlock";
+import "./Login.scss";
+
 export const Login = () => {
     return (
-        <>Login page</>
+        <div className={"login-page"}>
+            <LoginBlock/>
+        </div>
     );
 };
