@@ -1,4 +1,13 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&family=Cormorant+SC:wght@300;400;500;600;700&family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap");
+html {
+  background-image: radial-gradient(circle at 50% 0%, rgb(255, 248, 243) 0%, #FAF0E8 100%);
+  min-height: 100vh;
+}
+
 header {
+  font-family: "Comfortaa", sans-serif;
   display: flex;
   position: fixed;
   top: 0;
@@ -6,13 +15,22 @@ header {
   background-color: rgba(12, 12, 20, 0.5);
   width: 100%;
   height: 72px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  z-index: 1000;
 }
-header h1 {
+header h2 {
   color: white;
   padding: 0;
   font-size: 24px;
   line-height: 72px;
   margin: 0 0 0 24px;
+}
+
+@media (min-width: 768px) {
+  header h2 {
+    font-size: 32px;
+  }
 }
 
 /*# sourceMappingURL=Header.css.map */
