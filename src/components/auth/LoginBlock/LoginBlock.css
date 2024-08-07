@@ -49,6 +49,7 @@
   outline: 2px solid black;
 }
 .login-block form button {
+  font-family: "Comfortaa", sans-serif;
   margin-top: 65px;
   border-radius: 200px;
   border: None;
@@ -61,7 +62,14 @@
   z-index: 0;
   align-self: center;
   transform: translate(0);
-  font-family: "Comfortaa", sans-serif;
+  cursor: pointer;
+  transition: 0.25s ease-in-out;
+}
+.login-block form button:hover {
+  transform: translate(0, -2.5px);
+}
+.login-block form button:active {
+  transform: translate(0, 0px);
 }
 .login-block form button::after {
   content: "";
@@ -76,6 +84,13 @@
   transition: 0.25s ease-in-out;
   transform: translate(0);
   filter: blur(10px);
+}
+.login-block form button:hover::after {
+  transform: translate(0, 2.5px);
+}
+.login-block form button:active::after {
+  transform: translate(0, 0px);
+  filter: blur(5px);
 }
 
 /*# sourceMappingURL=LoginBlock.css.map */

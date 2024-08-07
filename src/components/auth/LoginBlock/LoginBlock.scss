@@ -55,6 +55,7 @@
 		}
 		
 		button {
+			@include comfortaa;
 			margin-top: 65px;
 			border-radius: 200px;
 			border: None;
@@ -67,7 +68,16 @@
 			z-index: 0;
 			align-self: center;
 			transform: translate(0);
-			@include comfortaa;
+			cursor: pointer;
+			transition: 0.25s ease-in-out;
+		}
+		
+		button:hover {
+			transform: translate(0, -2.5px);
+		}
+		
+		button:active {
+			transform: translate(0, 0px);
 		}
 		
 		button::after {
@@ -83,6 +93,15 @@
 			transition: 0.25s ease-in-out;
 			transform: translate(0);
 			filter: blur(10px);
+		}
+		
+		button:hover::after {
+			transform: translate(0, 2.5px);
+		}
+		
+		button:active::after {
+			transform: translate(0, 0px);
+			filter: blur(5px);
 		}
 	}
 }
