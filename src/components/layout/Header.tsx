@@ -12,7 +12,8 @@ export const Header = () => {
             <div className="user">
                 {user ? (
                     <>
-                        <span>{user.username}</span>
+                        <span>{user.firstName}</span>
+                        <span>{user.lastName}</span>
                         <span>{user.email}</span>
                     </>
                 ) : (

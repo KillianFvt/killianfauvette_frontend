@@ -52,18 +52,23 @@
   font-family: "Comfortaa", sans-serif;
   margin-top: 65px;
   border-radius: 200px;
-  border: None;
-  outline: None;
+  border: none;
+  outline: none;
   background: linear-gradient(90deg, rgb(237, 162, 89), rgb(80, 59, 186));
   color: white;
   width: 80%;
   height: 40px;
   font-size: 18px;
-  z-index: 0;
+  z-index: 1;
   align-self: center;
-  transform: translate(0);
   cursor: pointer;
-  transition: 0.25s ease-in-out;
+  position: relative;
+  transition: background 0.25s ease-in-out, transform 0.25s ease-in-out;
+}
+.login-block form button.disabled {
+  background: grey;
+  cursor: not-allowed;
+  transition: background 0.25s ease-in-out, transform 0.25s ease-in-out;
 }
 .login-block form button:hover {
   transform: translate(0, -2.5px);
@@ -81,7 +86,7 @@
   left: 0;
   z-index: -1;
   border-radius: 200px;
-  transition: 0.25s ease-in-out;
+  transition: transform 0.25s ease-in-out, filter 0.25s ease-in-out;
   transform: translate(0);
   filter: blur(10px);
 }
@@ -91,6 +96,18 @@
 .login-block form button:active::after {
   transform: translate(0, 0px);
   filter: blur(5px);
+}
+.login-block form button.disabled:hover, .login-block form button.disabled:active, .login-block form button.disabled::after {
+  transform: translate(0, 0);
+  background: grey;
+  filter: none;
+}
+.login-block #login-error {
+  color: red;
+  font-size: 16px;
+  text-align: center;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 /*# sourceMappingURL=LoginBlock.css.map */

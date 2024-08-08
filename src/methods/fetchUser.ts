@@ -5,6 +5,7 @@ export const fetchUser = async () : Promise<User | null> => {
     try {
         const response = await fetch(`${API_URL}/users/current/`, {
             method: 'GET',
+            credentials: 'include',
         });
         if (response.ok) {
             const data = await response.json();
@@ -14,8 +15,10 @@ export const fetchUser = async () : Promise<User | null> => {
                 email: data.email,
                 firstName: data.first_name,
                 lastName: data.last_name,
+                isLoggedIn: true,
             };
         } else {
+            // TODO try refresh token
             console.error('fetchUser error:', await response.json());
             return null;
         }
