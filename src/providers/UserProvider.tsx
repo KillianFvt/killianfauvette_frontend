@@ -1,19 +1,20 @@
-import React, {createContext, useState, useContext, useEffect, useCallback} from 'react';
+import React, {createContext, useCallback, useContext, useEffect, useState} from 'react';
 import {User} from "../types/UserType";
 import {fetchUser} from "../methods/fetchUser";
 import {refreshToken} from "../methods/refreshToken";
-import {useNavigate} from "react-router-dom";
 
 interface UserContextType {
     user: User | null;
     setUser: (user: User | null) => void;
     loading: boolean;
+    reloadUser: () => Promise<void>;
 }
 
 const UserContext = createContext<UserContextType>({
     user: null,
     setUser: () => {},
     loading: true,
+    reloadUser: async () => {},
 });
 
 export const UserProvider = ({ children }: { children: React.ReactNode }) => {
@@ -24,39 +25,39 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
         setUser(usr);
         localStorage.setItem('user', JSON.stringify(usr));
     }, []);
-    
-    const navigate = useNavigate();
 
-    useEffect(() => {
+
+    const reloadUser = useCallback(async () => {
+        setLoading(true);
         const storedUser: string | null = localStorage.getItem('user');
 
         if (storedUser) {
             setUser(JSON.parse(storedUser));
             setLoading(false);
         } else {
-            fetchUser().then((fetchedUser: User | null) => {
-                if (fetchedUser) {
-                    storeUser(fetchedUser);
+            const fetchedUser: User | null = await fetchUser();
+            if (fetchedUser) {
+                storeUser(fetchedUser);
+            } else {
+                const success: boolean = await refreshToken();
+                if (success) {
+                    const refreshedUser: User | null = await fetchUser();
+                    if (refreshedUser) {
+                        storeUser(refreshedUser);
+                    }
                 } else {
-                    refreshToken().then((success) => {
-                        if (success) {
-                            fetchUser().then((refreshedUser: User | null) => {
-                                if (refreshedUser) {
-                                    storeUser(refreshedUser);
-                                }
-                                setLoading(false);
-                            });
-                        } else {
-                            localStorage.removeItem('user');
-                            setLoading(false);
-                        }
-                    });
+                    localStorage.removeItem('user');
                 }
-            });
+            }
+            setLoading(false);
         }
-    }, [navigate, storeUser]);
+    }, [storeUser]);
 
-    const value = { user, setUser, loading };
+    useEffect(() => {
+        reloadUser();
+    }, [reloadUser]);
+
+    const value = { user, setUser, loading, reloadUser };
 
     return (
         <UserContext.Provider value={value}>{children}</UserContext.Provider>

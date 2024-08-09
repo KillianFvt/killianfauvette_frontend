@@ -1,5 +1,6 @@
 import {API_URL} from "../App";
 import {fetchUser} from "./fetchUser";
+import {User} from "../types/UserType";
 
 interface loginResponse {
     success: boolean,
@@ -22,7 +23,7 @@ export const loginUser = async (email: string, password: string) : Promise<login
 
     if (response.ok) {
 
-        const user = await fetchUser();
+        const user: User | null = await fetchUser();
 
         return {
             'success': true,

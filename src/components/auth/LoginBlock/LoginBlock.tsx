@@ -2,9 +2,9 @@ import React, {useRef, useState} from "react";
 import "./LoginBlock.scss"
 import {loginUser} from "../../../methods/loginUser";
 import {useNavigate} from "react-router-dom";
+import {useUser} from "../../../providers/UserProvider";
 
 export const LoginBlock = () => {
-
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [loginError, setLoginError] = useState("");
@@ -13,12 +13,14 @@ export const LoginBlock = () => {
     );
 
     const navigate = useNavigate();
+    const { reloadUser } = useUser();
 
     const handleLogin = (e: React.FormEvent) => {
         e.preventDefault();
-        loginUser(email, password).then((response) => {
+        loginUser(email, password).then(async (response) => {
             if (response.success) {
                 console.log('User logged in:', response.data);
+                await reloadUser();
 
                 if (redirect.current) navigate(redirect.current);
                 else navigate('/');
@@ -52,14 +54,14 @@ export const LoginBlock = () => {
                 <label>
                     <span>Email</span>
                     <input
-                        type="text" placeholder={"Email"} required={true}
+                        type="text" placeholder={"Email"} required={true} autoComplete={"email"}
                         value={email} onChange={(e) => setEmail(e.target.value)}
                     />
                 </label>
                 <label>
                     <span>Password</span>
                     <input
-                        type="password" placeholder={"Password"} required={true}
+                        type="password" placeholder={"Password"} required={true} autoComplete={"current-password"}
                         value={password} onChange={(e) => setPassword(e.target.value)}
                     />
                 </label>
