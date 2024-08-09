@@ -15,53 +15,52 @@ export const LoginBlock = () => {
     const navigate = useNavigate();
     const { reloadUser } = useUser();
 
-    const handleLogin = (e: React.FormEvent) => {
+    const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
-        loginUser(email, password).then(async (response) => {
-            if (response.success) {
-                console.log('User logged in:', response.data);
-                await reloadUser();
+        const response = await loginUser(email, password);
+        if (response.success) {
+            console.log('User logged in:', response.data);
+            await reloadUser();
 
-                if (redirect.current) navigate(redirect.current);
-                else navigate('/');
+            if (redirect.current) navigate(redirect.current);
+            else navigate('/');
 
-            } else {
-                console.error('Login error:', response.data);
+        } else {
+            console.error('Login error:', response.data);
 
-                let errorMsg : string = "";
+            let errorMsg : string = "";
 
-                if (response.data.username) {
-                    errorMsg += " Vous devez entrer un email.";
-                }
-
-                if (response.data.password) {
-                    errorMsg += " Vous devez entrer un mot de passe.";
-                }
-
-                if (response.data.detail === "No active account found with the given credentials") {
-                    errorMsg = "Email ou mot de passe incorrect";
-                }
-
-                setLoginError(errorMsg);
+            if (response.data.username) {
+                errorMsg += " Vous devez entrer un email.";
             }
-        });
+
+            if (response.data.password) {
+                errorMsg += " Vous devez entrer un mot de passe.";
+            }
+
+            if (response.data.detail === "No active account found with the given credentials") {
+                errorMsg = "Email ou mot de passe incorrect";
+            }
+
+            setLoginError(errorMsg);
+        }
     };
 
     return (
         <div className={"login-block"}>
             <h1>Connexion</h1>
-            <form action="" onSubmit={handleLogin}>
+            <form action="/login" method={"post"} onSubmit={handleLogin} autoComplete="on">
                 <label>
                     <span>Email</span>
                     <input
-                        type="text" placeholder={"Email"} required={true} autoComplete={"email"}
+                        type="email" placeholder={"Email"} required={true} autoComplete={"on"} name={"email"}
                         value={email} onChange={(e) => setEmail(e.target.value)}
                     />
                 </label>
                 <label>
                     <span>Password</span>
                     <input
-                        type="password" placeholder={"Password"} required={true} autoComplete={"current-password"}
+                        type="password" placeholder={"Password"} required={true} autoComplete={"current-password"} name={"password"}
                         value={password} onChange={(e) => setPassword(e.target.value)}
                     />
                 </label>

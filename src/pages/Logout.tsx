@@ -35,9 +35,7 @@ export const Logout = () => {
     useEffect(() => {
         handleLogout().then(() => {
             setSuccess(true);
-            setTimeout(() => {
-                navigate('/');
-            }, 2000);
+            navigate('/');
         });
     }, [handleLogout, navigate]);
 

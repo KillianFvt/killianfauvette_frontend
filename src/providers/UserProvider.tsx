@@ -47,6 +47,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
                     }
                 } else {
                     localStorage.removeItem('user');
+                    setUser(null);
                 }
             }
             setLoading(false);
