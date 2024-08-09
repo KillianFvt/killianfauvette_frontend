@@ -8,6 +8,7 @@ export const LoginBlock = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [loginError, setLoginError] = useState("");
+    const [loading, setLoading] = useState(false);
     const redirect = useRef(
         new URLSearchParams(window.location.search).get("redirect")
     );
@@ -17,10 +18,15 @@ export const LoginBlock = () => {
 
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
+
+        if (loading) return;
+
+        setLoading(true);
         const response = await loginUser(email, password);
         if (response.success) {
             console.log('User logged in:', response.data);
             await reloadUser();
+            setLoading(false);
 
             if (redirect.current) navigate(redirect.current);
             else navigate('/');
@@ -68,7 +74,9 @@ export const LoginBlock = () => {
                     type={"submit"}
                     disabled={email === "" || password === ""}
                     className={email === "" || password === "" ? "disabled" : ""}
-                >Se connecter</button>
+                >
+                    {loading ? 'Chargement...' : 'Se connecter'}
+                </button>
             </form>
             <span id="login-error">{loginError}</span>
         </div>
