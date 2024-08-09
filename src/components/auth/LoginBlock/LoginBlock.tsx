@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useRef, useState} from "react";
 import "./LoginBlock.scss"
 import {loginUser} from "../../../methods/loginUser";
 import {useNavigate} from "react-router-dom";
@@ -8,6 +8,9 @@ export const LoginBlock = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [loginError, setLoginError] = useState("");
+    const redirect = useRef(
+        new URLSearchParams(window.location.search).get("redirect")
+    );
 
     const navigate = useNavigate();
 
@@ -16,7 +19,10 @@ export const LoginBlock = () => {
         loginUser(email, password).then((response) => {
             if (response.success) {
                 console.log('User logged in:', response.data);
-                navigate('/');
+
+                if (redirect.current) navigate(redirect.current);
+                else navigate('/');
+
             } else {
                 console.error('Login error:', response.data);
 

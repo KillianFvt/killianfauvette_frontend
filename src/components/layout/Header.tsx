@@ -4,7 +4,7 @@ import {User} from "../../types/UserType";
 
 export const Header = () => {
 
-    const { user }: { user: User | null } = useUser();
+    const { user }: { user: User | null} = useUser();
 
     return (
         <header>
