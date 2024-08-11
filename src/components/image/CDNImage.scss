@@ -1,16 +1,6 @@
-.cdn-image {
+.cdn-image.placeholder {
     width: 100%;
     height: 100%;
-    object-fit: cover;
-    object-position: center;
-    transition: border-color 0.3s;
-}
-
-.cdn-image-placeholder {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
     overflow: hidden;
     display: flex;
     justify-content: center;

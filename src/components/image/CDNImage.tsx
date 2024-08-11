@@ -49,7 +49,7 @@ export const CDNImage = (cdnImageProps: CDNImageProps) => {
     }
 
     if (!image) {
-        return <div className={'cdn-image-placeholder'}>
+        return <div className={'cdn-image placeholder'}>
             <div className={"swiper"}/>
         </div>;
     }

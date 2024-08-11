@@ -8,7 +8,7 @@ import './ViewImagePage.scss';
 export const ViewImagePage = () => {
 
     const params = useParams();
-    const imageId: React.MutableRefObject<number> = useRef(
+    const imageId = useRef<number>(
         parseInt(params.imageId ?? "-1")
     );
     const [imageData, setImageData]
@@ -28,7 +28,13 @@ export const ViewImagePage = () => {
 
     return (
         <div className={"view-image-page"}>
-            <h1>View Image {imageId.current}</h1>
+
+            {imageData &&
+	            <p>{
+                    `name : ${imageData?.name}, uploaded : ${imageData?.uploaded}, belongs_to : ${imageData.belongs_to}`
+                }</p>
+            }
+
             {imageData === undefined ? (
                 <p>Chargement...</p>
             ) : imageData === null ? (
