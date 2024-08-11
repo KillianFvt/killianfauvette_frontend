@@ -1,8 +1,8 @@
-import {API_URL} from "../App";
+import {API_URL} from "../../App";
 import {Suspense, useCallback, useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import './Logout.scss'
-import {useUser} from "../providers/UserProvider";
+import {useUser} from "../../providers/UserProvider";
 
 export const Logout = () => {
     const [success, setSuccess] = useState(false);

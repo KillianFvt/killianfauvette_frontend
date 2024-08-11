@@ -1,4 +1,4 @@
-import {LoginBlock} from "../components/auth/LoginBlock/LoginBlock";
+import {LoginBlock} from "../../components/auth/LoginBlock/LoginBlock";
 import "./Login.scss";
 
 export const Login = () => {

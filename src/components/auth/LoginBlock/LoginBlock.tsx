@@ -55,7 +55,7 @@ export const LoginBlock = () => {
     return (
         <div className={"login-block"}>
             <h1>Connexion</h1>
-            <form action="/login" method={"post"} onSubmit={handleLogin} autoComplete="on">
+            <form action="/auth/Login" method={"post"} onSubmit={handleLogin} autoComplete="on">
                 <label>
                     <span>Email</span>
                     <input

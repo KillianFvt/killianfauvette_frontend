@@ -1,57 +1,60 @@
-import {useEffect, useState} from "react";
-import {BEARER_TOKEN} from "../../App";
+import {useCallback, useEffect, useState} from "react";
+import {CDN_TOKEN, CDN_URL} from "../../App";
+import './CDNImage.scss';
 
 interface CDNImageProps {
     url: string;
     name: string;
 }
 
-export const CDNImage = (imageProps: CDNImageProps) => {
+export const CDNImage = (cdnImageProps: CDNImageProps) => {
     const [image, setImage] = useState<Blob | null>(null);
-    const token = BEARER_TOKEN;
+    const [hasError, setHasError] = useState<boolean>(false);
+    const cdnToken: string = CDN_TOKEN;
+
+    const fetchCDNImage = useCallback(async () => {
+        try {
+            const response = await fetch(
+                `${CDN_URL}/${cdnImageProps.url}`,
+                {
+                    method: 'GET',
+                    mode: 'cors',
+                    headers: {
+                        'Authorization': `Bearer ${cdnToken}`,
+                    }
+                }
+            );
+
+            if (response.ok) {
+                const data = await response.blob();
+                setImage(data);
+                return true;
+            } else {
+                return false;
+            }
+        } catch (error) {
+            console.error("Error fetching image:", error);
+            return false;
+        }
+    }, [cdnImageProps.url, cdnToken]);
 
     useEffect(() => {
-        if (token) {
-            const fetchImage = async () => {
-                try {
-                    const response = await fetch(
-                        imageProps.url,
-                        {
-                            method: 'GET',
-                            mode: 'cors',
-                            headers: {
-                                // 'Authorization': `Bearer ${token}`
-                                'Authorization': 'Bearer 17?-kilFAU',
-                            }
-                        }
-                    );
-                    if (response.ok) {
-                        const data = await response.blob();
-                        setImage(data);
-                    } else {
-                        console.error("Failed to fetch image");
-                    }
-                } catch (error) {
-                    console.error("Error fetching image:", error);
-                }
-            };
-
-            fetchImage();
+        if (cdnToken) {
+            fetchCDNImage().then((success: boolean) => setHasError(!success));
         }
-    }, [imageProps.url, token]);
+    }, [cdnImageProps.url, cdnToken, fetchCDNImage]);
 
-    if (!image) {
-        return <div>Loading...</div>;
+    if (hasError) {
+        return <p>Cette image n'existe pas ou n'est pas accessible.</p>;
     }
 
-    const displayImage = URL.createObjectURL(image);
+    if (!image) {
+        return <div className={'cdn-image-placeholder'}>
+            <div className={"swiper"}/>
+        </div>;
+    }
 
-    return (
-        <div className={"CDNImage"}>
-            <a download={imageProps.name} href={displayImage}>
-                <img alt={""} src={displayImage}/>
-            </a>
-            <p>{imageProps.name}</p>
-        </div>
-    );
+    const displayImage: string = URL.createObjectURL(image);
+
+    return <img className={'cdn-image'} alt={cdnImageProps.name} src={displayImage}/>;
 };

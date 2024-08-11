@@ -31,9 +31,10 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
         setLoading(true);
         const storedUser: string | null = localStorage.getItem('user');
 
-        if (storedUser) {
-            setUser(JSON.parse(storedUser));
-            setLoading(false);
+        if (storedUser && false) {
+            // TODO find a way to check if token is expired
+            // setUser(JSON.parse(storedUser));
+            // setLoading(false);
         } else {
             const fetchedUser: User | null = await fetchUser();
             if (fetchedUser) {
