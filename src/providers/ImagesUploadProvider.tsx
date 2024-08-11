@@ -10,6 +10,7 @@ export interface ImagesUploadContextType {
     handleSubmit: () => void;
     updateFileName: (index: number, fileName: string) => void;
     updateFileWatermark: (index: number, hasWatermark: boolean) => void;
+    deleteFile: (index: number) => void;
 }
 
 const ImagesUploadContext = createContext<ImagesUploadContextType>({
@@ -21,6 +22,7 @@ const ImagesUploadContext = createContext<ImagesUploadContextType>({
     updateFileName: () => {},
     updateFileWatermark: () => {},
     handleSubmit: () => {},
+    deleteFile: () => {},
 });
 
 export const ImagesUploadProvider = ({ children }: { children: React.ReactNode }) => {
@@ -29,7 +31,7 @@ export const ImagesUploadProvider = ({ children }: { children: React.ReactNode }
     const handleFiles = (files: FileList) => {
         const newImages : NewImageData[] = Array.from(files).map(file => ({
             file: file,
-            name: file.name,
+            name: file.name.split('.').slice(0, -1).join('.'),
             url: URL.createObjectURL(file),
             has_watermark: false,
             belongs_to: []
@@ -70,6 +72,14 @@ export const ImagesUploadProvider = ({ children }: { children: React.ReactNode }
         });
     }
 
+    const deleteFile = (index: number) => {
+        setFiles(prevImages => {
+            const newImages = [...prevImages];
+            newImages.splice(index, 1);
+            return newImages;
+        });
+    }
+
     const value = {
         files,
         setFiles,
@@ -79,6 +89,7 @@ export const ImagesUploadProvider = ({ children }: { children: React.ReactNode }
         updateFileName,
         updateFileWatermark,
         handleSubmit,
+        deleteFile,
     };
 
     return <ImagesUploadContext.Provider value={value}>{children}</ImagesUploadContext.Provider>;
