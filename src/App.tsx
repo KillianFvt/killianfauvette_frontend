@@ -6,11 +6,12 @@ import {Login} from "./pages/auth/Login";
 import {UserProvider} from "./providers/UserProvider";
 import ProtectedRoute from "./components/layout/ProtectedRoute";
 import {Logout} from "./pages/auth/Logout";
-import {ViewImagePage} from "./pages/ViewImagePage";
+import {ViewImagePage} from "./pages/images/ViewImagePage";
+import {UploadImagesPage} from "./pages/images/UploadImagesPage";
 
 const API_URL: string = process.env.REACT_APP_API_URL!;
 const CDN_URL: string = process.env.REACT_APP_CDN_URL!;
-const CDN_TOKEN: string = process.env.REACT_APP_BEARER_TOKEN!;
+const CDN_TOKEN: string = process.env.REACT_APP_CDN_BEARER_TOKEN!;
 
 const App = () => (
     <div className="App">
@@ -27,6 +28,8 @@ const App = () => (
 
                     <Route path={"/images"} element={<Layout/>}>
                         <Route path={":imageId"} element={<ViewImagePage/>}/>
+                        <Route path={"upload"} element={<UploadImagesPage/>}/>
+
                     </Route>
 
                     <Route path={"*"} element={<h1>Oups, vous vous êtes perdus !</h1>}/>

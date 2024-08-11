@@ -1,8 +1,8 @@
 import {useEffect, useRef, useState} from "react";
 import {useParams} from "react-router-dom";
-import {fetchImage} from "../methods/fetchImage";
-import {ImageData} from "../types/ImageData";
-import {CDNImage} from "../components/image/CDNImage";
+import {fetchImage} from "../../methods/fetchImage";
+import {ImageData} from "../../types/ImageData";
+import {CDNImage} from "../../components/image/CDNImage";
 import './ViewImagePage.scss';
 
 export const ViewImagePage = () => {

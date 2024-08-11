@@ -45,7 +45,7 @@ export const CDNImage = (cdnImageProps: CDNImageProps) => {
     }, [cdnImageProps.url, cdnToken, fetchCDNImage]);
 
     if (hasError) {
-        return <p>Cette image n'existe pas ou n'est pas accessible.</p>;
+        return <p>Cette image n'existe plus ou n'est pas accessible.</p>;
     }
 
     if (!image) {
@@ -55,6 +55,7 @@ export const CDNImage = (cdnImageProps: CDNImageProps) => {
     }
 
     const displayImage: string = URL.createObjectURL(image);
+    console.log(displayImage);
 
     return <img className={'cdn-image'} alt={cdnImageProps.name} src={displayImage}/>;
 };

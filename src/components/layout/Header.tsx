@@ -12,9 +12,9 @@ export const Header = () => {
             <div className="user">
                 {user ? (
                     <>
-                        <span>{user.firstName}</span>
-                        <span>{user.lastName}</span>
-                        <span>{user.email}</span>
+                        <span>{user.firstName} | </span>
+                        <span>{user.lastName} | </span>
+                        <span>{user.email} </span>
                     </>
                 ) : (
                     <span>Not logged in</span>
