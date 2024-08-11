@@ -7,7 +7,7 @@ export interface ImagesUploadContextType {
     handleFiles: (files: FileList) => void;
     handleDrop: (event: React.DragEvent<HTMLDivElement>) => void;
     handleFileChange: (event: ChangeEvent<HTMLInputElement>) => void;
-    handleSubmit: () => void;
+    handleSubmit: (e: React.FormEvent) => void;
     updateFileName: (index: number, fileName: string) => void;
     updateFileWatermark: (index: number, hasWatermark: boolean) => void;
     deleteFile: (index: number) => void;
@@ -32,7 +32,8 @@ export const ImagesUploadProvider = ({ children }: { children: React.ReactNode }
         const newImages : NewImageData[] = Array.from(files).map(file => ({
             file: file,
             name: file.name.split('.').slice(0, -1).join('.'),
-            url: URL.createObjectURL(file),
+            url: file.name, // TODO find a way to update with extension
+            blobUrl: URL.createObjectURL(file),
             has_watermark: false,
             belongs_to: []
         }));
@@ -66,7 +67,8 @@ export const ImagesUploadProvider = ({ children }: { children: React.ReactNode }
         });
     };
 
-    const handleSubmit = () => {
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
         files.forEach(image => {
             console.info('Image:', image);
         });

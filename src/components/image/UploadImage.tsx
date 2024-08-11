@@ -9,7 +9,8 @@ export const UploadImage = ({ index } : UploadImageProps) => {
     const {
         files,
         updateFileName,
-        updateFileWatermark
+        updateFileWatermark,
+        deleteFile,
     }: ImagesUploadContextType = useImagesUpload();
 
     const handleFileNameChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -20,9 +21,13 @@ export const UploadImage = ({ index } : UploadImageProps) => {
         updateFileWatermark(index, e.target.checked);
     }
 
+    const handleDeleteFile = (index: number) => () => {
+        deleteFile(index);
+    }
+
     return (
         <div className={"upload-image"}>
-            <img className={'image-preview'} src={files[index].url} alt={files[0].name}/>
+            <img className={'image-preview'} src={files[index].blobUrl} alt={files[0].name}/>
             <input
                 type="text" value={files[index].name}
                 onChange={handleFileNameChange}
@@ -36,6 +41,7 @@ export const UploadImage = ({ index } : UploadImageProps) => {
                 />
                 Has Watermark
             </label>
+            <button onClick={handleDeleteFile(index)}>Delete</button>
         </div>
     );
 };

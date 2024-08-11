@@ -1,4 +1,3 @@
-import {useContext} from "react";
 import {useImagesUpload, ImagesUploadContextType} from "../../providers/ImagesUploadProvider";
 import {UploadImage} from "./UploadImage";
 
@@ -7,8 +6,6 @@ export const UploadImagesForm = () => {
         files,
         handleFileChange,
         handleDrop,
-        updateFileName,
-        updateFileWatermark,
         handleSubmit
     }: ImagesUploadContextType = useImagesUpload();
 
@@ -29,6 +26,8 @@ export const UploadImagesForm = () => {
                     ))
                 }
             </div>
+
+            <button type={"submit"}>Submit (fake)</button>
         </form>
     );
 };
