@@ -6,7 +6,7 @@ export const UploadImagesPage = () => {
     return (
         <ImagesUploadProvider>
             <div className="upload-images-page">
-                <h2>Upload images</h2>
+                <h1>Upload images</h1>
                 <UploadImagesForm/>
             </div>
         </ImagesUploadProvider>

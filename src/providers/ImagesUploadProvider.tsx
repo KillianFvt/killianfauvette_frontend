@@ -5,7 +5,7 @@ export interface ImagesUploadContextType {
     files: NewImageData[];
     setFiles: Dispatch<SetStateAction<NewImageData[]>>;
     handleFiles: (files: FileList) => void;
-    handleDrop: (event: React.DragEvent<HTMLDivElement>) => void;
+    handleDrop: (event: React.DragEvent<HTMLLabelElement>) => void;
     handleFileChange: (event: ChangeEvent<HTMLInputElement>) => void;
     handleSubmit: (e: React.FormEvent) => void;
     updateFileName: (index: number, fileName: string) => void;
@@ -40,7 +40,7 @@ export const ImagesUploadProvider = ({ children }: { children: React.ReactNode }
         setFiles(prevImages => [...prevImages, ...newImages]);
     };
 
-    const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
+    const handleDrop = (event: React.DragEvent<HTMLLabelElement>) => {
         event.preventDefault();
         handleFiles(event.dataTransfer.files);
     };

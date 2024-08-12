@@ -1,5 +1,7 @@
 import {ImagesUploadContextType, useImagesUpload} from "../../providers/ImagesUploadProvider";
 import {ChangeEvent} from "react";
+import {ReactComponent as DeleteIcon} from "../../assets/icons/delete-icon.svg";
+import './UploadImage.scss';
 
 interface UploadImageProps {
     index: number;
@@ -13,7 +15,7 @@ export const UploadImage = ({ index } : UploadImageProps) => {
         deleteFile,
     }: ImagesUploadContextType = useImagesUpload();
 
-    const handleFileNameChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const handleFileNameChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
         updateFileName(index, e.target.value);
     }
 
@@ -27,21 +29,34 @@ export const UploadImage = ({ index } : UploadImageProps) => {
 
     return (
         <div className={"upload-image"}>
-            <img className={'image-preview'} src={files[index].blobUrl} alt={files[0].name}/>
-            <input
-                type="text" value={files[index].name}
-                onChange={handleFileNameChange}
-            />
+            <button className={"delete-img-btn"} onClick={handleDeleteFile(index)}>
+                <DeleteIcon className={"delete-icon"}/>
+            </button>
 
-            <label>
-                <input
-                    type="checkbox"
-                    checked={files[index].has_watermark}
-                    onChange={handleFileWatermarkChange}
+            <div className={'image-preview'}>
+                <img src={files[index].blobUrl} alt={files[0].name}/>
+            </div>
+
+            <div className={"upload-image-inputs"}>
+                <textarea
+                    className={"file-name-input"}
+                    value={files[index].name}
+                    onChange={handleFileNameChange}
+                    onInput={(e) => {
+                        e.currentTarget.style.height = "auto";
+                        e.currentTarget.style.height = e.currentTarget.scrollHeight + "px";
+                    }}
                 />
-                Has Watermark
-            </label>
-            <button onClick={handleDeleteFile(index)}>Delete</button>
+
+                <label>
+                    <input
+                        type="checkbox"
+                        checked={files[index].has_watermark}
+                        onChange={handleFileWatermarkChange}
+                    />
+                    Has Watermark
+                </label>
+            </div>
         </div>
     );
 };
