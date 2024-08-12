@@ -16,7 +16,11 @@ export const UploadImage = ({ index } : UploadImageProps) => {
     }: ImagesUploadContextType = useImagesUpload();
 
     const handleFileNameChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        updateFileName(index, e.target.value);
+        let newFileName: string = e.target.value.replaceAll('\n', '');
+        newFileName = newFileName.replaceAll('\r', '');
+        newFileName = newFileName.replaceAll(' ', '_');
+        updateFileName(index, newFileName);
+        e.target.value = newFileName;
     }
 
     const handleFileWatermarkChange = (e: ChangeEvent<HTMLInputElement>) => {

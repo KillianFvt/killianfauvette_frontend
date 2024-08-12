@@ -1,6 +1,6 @@
 export type NewImageData = {
     name: string;
-    url: string;
+    extension: string;
     blobUrl: string;
     has_watermark: boolean;
     belongs_to: number[];

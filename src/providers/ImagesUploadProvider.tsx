@@ -5,11 +5,13 @@ export interface ImagesUploadContextType {
     files: NewImageData[];
     setFiles: Dispatch<SetStateAction<NewImageData[]>>;
     handleFiles: (files: FileList) => void;
+    handleFileChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     handleDrop: (event: React.DragEvent<HTMLLabelElement>) => void;
-    handleFileChange: (event: ChangeEvent<HTMLInputElement>) => void;
     handleSubmit: (e: React.FormEvent) => void;
     updateFileName: (index: number, fileName: string) => void;
+    updateAllFileNames: (fileName: string) => void;
     updateFileWatermark: (index: number, hasWatermark: boolean) => void;
+    updateAllFileWatermarks: (hasWatermark: boolean) => void;
     deleteFile: (index: number) => void;
 }
 
@@ -20,7 +22,9 @@ const ImagesUploadContext = createContext<ImagesUploadContextType>({
     handleDrop: () => {},
     handleFileChange: () => {},
     updateFileName: () => {},
+    updateAllFileNames: () => {},
     updateFileWatermark: () => {},
+    updateAllFileWatermarks: () => {},
     handleSubmit: () => {},
     deleteFile: () => {},
 });
@@ -32,7 +36,7 @@ export const ImagesUploadProvider = ({ children }: { children: React.ReactNode }
         const newImages : NewImageData[] = Array.from(files).map(file => ({
             file: file,
             name: file.name.split('.').slice(0, -1).join('.'),
-            url: file.name, // TODO find a way to update with extension
+            extension: file.name.split('.').pop() || '',
             blobUrl: URL.createObjectURL(file),
             has_watermark: false,
             belongs_to: []
@@ -59,6 +63,28 @@ export const ImagesUploadProvider = ({ children }: { children: React.ReactNode }
         });
     };
 
+    const updateAllFileNames = (fileName: string) => {
+        setFiles((prevImages: NewImageData[]) => {
+            const newImages: NewImageData[] = [...prevImages];
+
+            if (fileName) {
+                const totalFiles: number = newImages.length;
+                const digits: number = totalFiles.toString().length;
+
+                for (let i: number = 0; i < totalFiles; i++) {
+                    const paddedIndex: string = (i + 1).toString().padStart(digits, '0');
+                    newImages[i].name = `${fileName}-${paddedIndex}`;
+                }
+            } else {
+                newImages.forEach((image: NewImageData) => {
+                    return image.name = image.file.name.split('.').slice(0, -1).join('.');
+                });
+            }
+
+            return newImages;
+        });
+};
+
     const updateFileWatermark = (index: number, hasWatermark: boolean) => {
         setFiles(prevImages => {
             const newImages = [...prevImages];
@@ -67,8 +93,17 @@ export const ImagesUploadProvider = ({ children }: { children: React.ReactNode }
         });
     };
 
+    const updateAllFileWatermarks = (hasWatermark: boolean) => {
+        setFiles(prevImages => {
+            const newImages = [...prevImages];
+            newImages.forEach(image => image.has_watermark = hasWatermark);
+            return newImages;
+        });
+    };
+
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
+        console.log('submit triggered');
         files.forEach(image => {
             console.info('Image:', image);
         });
@@ -89,7 +124,9 @@ export const ImagesUploadProvider = ({ children }: { children: React.ReactNode }
         handleDrop,
         handleFileChange,
         updateFileName,
+        updateAllFileNames,
         updateFileWatermark,
+        updateAllFileWatermarks,
         handleSubmit,
         deleteFile,
     };

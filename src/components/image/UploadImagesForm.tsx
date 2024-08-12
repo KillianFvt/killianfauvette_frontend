@@ -1,17 +1,30 @@
 import {useImagesUpload, ImagesUploadContextType} from "../../providers/ImagesUploadProvider";
 import {UploadImage} from "./UploadImage";
 import './UploadImageForm.scss';
-import {useEffect, useState} from "react";
+import {ChangeEvent, useEffect, useState} from "react";
+import {NewImageData} from "../../types/NewImageData";
 
 export const UploadImagesForm = () => {
     const {
         files,
         handleFileChange,
         handleDrop,
-        handleSubmit
+        handleSubmit,
+        updateAllFileWatermarks,
+        updateAllFileNames,
     }: ImagesUploadContextType = useImagesUpload();
 
     const [isDragging, setIsDragging] = useState<boolean>(false);
+    const handleAllFileNames = (e: ChangeEvent<HTMLTextAreaElement>) => {
+        let newFileName: string = e.target.value.replaceAll('\n', '');
+        newFileName = newFileName.replaceAll('\r', '');
+        newFileName = newFileName.replaceAll(' ', '_');
+        updateAllFileNames(newFileName);
+        e.target.value = newFileName;
+    }
+    const handleAllFileWatermarks = (e: ChangeEvent<HTMLInputElement>) => {
+        updateAllFileWatermarks(e.target.checked);
+    }
 
     useEffect(() => {
         const handleDragEnter = () => setIsDragging(true);
@@ -32,9 +45,25 @@ export const UploadImagesForm = () => {
     return (
         <form onSubmit={handleSubmit} className={"upload-images-form"}>
 
+            {files.length > 0 &&
+				<div id={'all-files-modifications'}>
+                    <textarea
+	                    name="all-file-names" id="all-file-names"
+	                    onChange={handleAllFileNames}
+                    />
+					<label>
+						<input
+							type="checkbox"
+							onChange={handleAllFileWatermarks}
+                        />
+						All images have watermark
+					</label>
+				</div>
+            }
+
             <div className={"images-preview"}>
                 {
-                    files.map((file, index) => (
+                    files.map((file: NewImageData, index) => (
                         <UploadImage key={index} index={index}/>
                     ))
                 }
