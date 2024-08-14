@@ -51,12 +51,11 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
                     setUser(null);
                 }
             }
-            setLoading(false);
         }
     }, [storeUser]);
 
     useEffect(() => {
-        reloadUser();
+        reloadUser().then(() => setLoading(false));
     }, [reloadUser]);
 
     const value = { user, setUser, loading, reloadUser };

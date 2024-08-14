@@ -4,6 +4,8 @@ import {NewImageData} from "../types/NewImageData";
 export interface ImagesUploadContextType {
     files: NewImageData[];
     setFiles: Dispatch<SetStateAction<NewImageData[]>>;
+    userIds: number[];
+    setUserIds: Dispatch<SetStateAction<number[]>>;
     handleFiles: (files: FileList) => void;
     handleFileChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     handleDrop: (event: React.DragEvent<HTMLLabelElement>) => void;
@@ -18,6 +20,8 @@ export interface ImagesUploadContextType {
 const ImagesUploadContext = createContext<ImagesUploadContextType>({
     files: [],
     setFiles: () => {},
+    userIds: [],
+    setUserIds: () => {},
     handleFiles: () => {},
     handleDrop: () => {},
     handleFileChange: () => {},
@@ -31,6 +35,7 @@ const ImagesUploadContext = createContext<ImagesUploadContextType>({
 
 export const ImagesUploadProvider = ({ children }: { children: React.ReactNode }) => {
     const [files, setFiles] = useState<NewImageData[]>([]);
+    const [userIds, setUserIds] = useState<number[]>([]);
 
     const handleFiles = (files: FileList) => {
         const newImages : NewImageData[] = Array.from(files).map(file => ({
@@ -120,6 +125,8 @@ export const ImagesUploadProvider = ({ children }: { children: React.ReactNode }
     const value = {
         files,
         setFiles,
+        userIds,
+        setUserIds,
         handleFiles,
         handleDrop,
         handleFileChange,

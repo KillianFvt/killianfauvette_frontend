@@ -3,10 +3,13 @@ import {UploadImage} from "./UploadImage";
 import './UploadImageForm.scss';
 import {ChangeEvent, useEffect, useState} from "react";
 import {NewImageData} from "../../types/NewImageData";
+import {UserSelector} from "../search/UserSelector";
 
 export const UploadImagesForm = () => {
     const {
         files,
+        userIds,
+        setUserIds,
         handleFileChange,
         handleDrop,
         handleSubmit,
@@ -43,51 +46,56 @@ export const UploadImagesForm = () => {
     }, []);
 
     return (
-        <form onSubmit={handleSubmit} className={"upload-images-form"}>
+        <div className={"upload-image-container"}>
+            <form onSubmit={handleSubmit} className={"upload-images-form"}>
 
-            {files.length > 0 &&
-				<div id={'all-files-modifications'}>
+                {files.length > 0 &&
+				    <div id={'all-files-modifications'}>
                     <textarea
 	                    name="all-file-names" id="all-file-names"
 	                    onChange={handleAllFileNames}
                     />
-					<label>
-						<input
-							type="checkbox"
-							onChange={handleAllFileWatermarks}
-                        />
-						All images have watermark
-					</label>
-				</div>
-            }
-
-            <div className={"images-preview"}>
-                {
-                    files.map((file: NewImageData, index) => (
-                        <UploadImage key={index} index={index}/>
-                    ))
+					    <label>
+						    <input
+							    type="checkbox"
+							    onChange={handleAllFileWatermarks}
+						    />
+						    All images have watermark
+					    </label>
+				    </div>
                 }
-            </div>
 
-            <input
-                type={"file"} multiple={true}
-                id={"file-input"}
-                name={"files"}
-                onChange={handleFileChange}
-                accept={"image/*"}
-                style={{display: 'none'}}
-            />
+                <div className={"images-preview"}>
+                    {
+                        files.map((file: NewImageData, index) => (
+                            <UploadImage key={index} index={index}/>
+                        ))
+                    }
+                </div>
 
-            <label
-                htmlFor={"file-input"}
-                onDragOver={(e) => e.preventDefault()}
-                onDrop={handleDrop}
-                className={`drop-zone ${isDragging ? 'dragging' : ''}`}
-            >
-                {isDragging ? 'Drop here' : 'Drag and drop images here'}
-            </label>
+                <input
+                    type={"file"} multiple={true}
+                    id={"file-input"}
+                    name={"files"}
+                    onChange={handleFileChange}
+                    accept={"image/*"}
+                    style={{display: 'none'}}
+                />
 
-            <button type={"submit"}>Submit (fake)</button>
-        </form>
+                <label
+                    htmlFor={"file-input"}
+                    onDragOver={(e) => e.preventDefault()}
+                    onDrop={handleDrop}
+                    className={`drop-zone ${isDragging ? 'dragging' : ''}`}
+                >
+                    {isDragging ? 'Drop here' : 'Drag and drop images here'}
+                </label>
+
+
+                <button type={"submit"}>Submit (fake)</button>
+            </form>
+
+            <UserSelector setUserIds={setUserIds} userIds={userIds}/>
+        </div>
     );
 };
