@@ -1,7 +1,8 @@
 import './UserSelector.scss';
-import {ChangeEvent, Dispatch, FormEvent, SetStateAction, useRef, useState} from "react";
+import {ChangeEvent, Dispatch, FormEvent, SetStateAction, useState} from "react";
 import {User} from "../../types/UserType";
 import {searchUsers} from "../../methods/searchUsers";
+import {useUser} from "../../providers/UserProvider";
 
 interface userSelectorProps {
     setUserIds: Dispatch<SetStateAction<number[]>>;
@@ -12,6 +13,7 @@ export const UserSelector = ({ setUserIds, userIds }: userSelectorProps) => {
     const [query, setQuery] = useState<string>('');
     const [queriedUsers, setQueriedUsers] = useState<User[]>([]);
     const [selectedUsers, setSelectedUsers] = useState<User[]>([]);
+    const { checkTokenExpiration, reloadUser } = useUser();
 
     const handleQueryChange = (e: ChangeEvent<HTMLInputElement>) => {
         setQuery(e.target.value);
@@ -20,6 +22,12 @@ export const UserSelector = ({ setUserIds, userIds }: userSelectorProps) => {
     const handleSearch = async (e: FormEvent) => {
         e.preventDefault();
         if (!query) return;
+
+        if (checkTokenExpiration()) {
+            console.log('Token expired, refreshing');
+            await reloadUser();
+        }
+
         let users = await searchUsers(query);
         users = users.filter(user => !userIds.includes(user.id));
         setQueriedUsers(users);

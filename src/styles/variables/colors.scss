@@ -7,4 +7,6 @@ $green: #37ae28;
 $g-orange: rgb(237, 162, 89);
 $g-purple: rgb(80, 59, 186);
 
-$photo-gradient: linear-gradient(90deg, $g-orange, $g-purple);
+@function photo-gradient($angle: 90deg) {
+	@return linear-gradient($angle, $g-orange, $g-purple);
+}

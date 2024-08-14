@@ -8,6 +8,7 @@ interface UserContextType {
     setUser: (user: User | null) => void;
     loading: boolean;
     reloadUser: () => Promise<void>;
+    checkTokenExpiration: () => boolean | null;
 }
 
 const UserContext = createContext<UserContextType>({
@@ -15,6 +16,7 @@ const UserContext = createContext<UserContextType>({
     setUser: () => {},
     loading: true,
     reloadUser: async () => {},
+    checkTokenExpiration: () => null,
 });
 
 export const UserProvider = ({ children }: { children: React.ReactNode }) => {
@@ -26,39 +28,69 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
         localStorage.setItem('user', JSON.stringify(usr));
     }, []);
 
+    /**
+     * Store the token expiration in the local storage
+     * expiration is set to 1 hour from now
+     */
+    const storeTokenExpiration = useCallback(() => {
+        let expirationDate: Date = new Date();
+        expirationDate.setHours(expirationDate.getHours() + 1);
+        localStorage.setItem('token_expiration',  expirationDate.toString());
+    }, []);
+
+    /**
+     * Check if the token has expired
+     * use it when doing a protected request that does not refresh the page
+     * if the token has expired, call reloadUser()
+     * @returns boolean | null
+     */
+    const checkTokenExpiration = useCallback(() => {
+        const storedTokenExpiration: string | null = localStorage.getItem('token_expiration');
+        if (storedTokenExpiration) {
+            const expirationDate: number = new Date(storedTokenExpiration).getTime();
+            const currentDate: number = Date.now();
+            return currentDate > expirationDate;
+        } else {
+            return null;
+        }
+    }, []);
+
 
     const reloadUser = useCallback(async () => {
         setLoading(true);
         const storedUser: string | null = localStorage.getItem('user');
+        const isTokenExpired: boolean | null = checkTokenExpiration();
 
-        if (storedUser && false) {
-            // TODO find a way to check if token is expired
-            // setUser(JSON.parse(storedUser));
-            // setLoading(false);
+        if (storedUser && !isTokenExpired) {
+            setUser(JSON.parse(storedUser));
+            setLoading(false);
         } else {
             const fetchedUser: User | null = await fetchUser();
             if (fetchedUser) {
                 storeUser(fetchedUser);
+                storeTokenExpiration();
             } else {
                 const success: boolean = await refreshToken();
                 if (success) {
                     const refreshedUser: User | null = await fetchUser();
                     if (refreshedUser) {
                         storeUser(refreshedUser);
+                        storeTokenExpiration();
                     }
                 } else {
                     localStorage.removeItem('user');
+                    localStorage.removeItem('token_expiration');
                     setUser(null);
                 }
             }
         }
-    }, [storeUser]);
+    }, [checkTokenExpiration, storeTokenExpiration, storeUser]);
 
     useEffect(() => {
         reloadUser().then(() => setLoading(false));
     }, [reloadUser]);
 
-    const value = { user, setUser, loading, reloadUser };
+    const value = { user, setUser, loading, reloadUser, checkTokenExpiration };
 
     return (
         <UserContext.Provider value={value}>{children}</UserContext.Provider>

@@ -60,7 +60,7 @@
 			border-radius: 200px;
 			border: none;
 			outline: none;
-			background: $photo-gradient;
+			background: photo-gradient();
 			color: white;
 			width: 80%;
 			height: 40px;
@@ -90,7 +90,7 @@
 				position: absolute;
 				width: 100%;
 				height: 100%;
-				background: $photo-gradient;
+				background: photo-gradient();
 				top: 0;
 				left: 0;
 				z-index: -1;

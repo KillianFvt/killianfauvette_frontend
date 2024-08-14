@@ -46,8 +46,8 @@ export const UploadImagesForm = () => {
     }, []);
 
     return (
-        <div className={"upload-image-container"}>
-            <form onSubmit={handleSubmit} className={"upload-images-form"}>
+        <div className={"upload-images-form"}>
+            <form onSubmit={handleSubmit}>
 
                 {files.length > 0 &&
 				    <div id={'all-files-modifications'}>
