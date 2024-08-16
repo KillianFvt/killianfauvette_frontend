@@ -1,6 +1,6 @@
 import {ImagesUploadContextType, useImagesUpload} from "../../providers/ImagesUploadProvider";
 import {ChangeEvent} from "react";
-import {ReactComponent as DeleteIcon} from "../../assets/icons/delete-icon.svg";
+import {ReactComponent as DeleteIcon} from "../../assets/icons/delete_icon.svg";
 import './UploadImage.scss';
 
 interface UploadImageProps {

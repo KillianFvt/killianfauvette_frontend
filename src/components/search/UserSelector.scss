@@ -1,0 +1,218 @@
+@import "src/styles/mixins/flex";
+@import "src/styles/variables/colors";
+
+@keyframes user-selected {
+	0% {
+		max-width: 0;
+	}
+	100% {
+		max-width: 100%;
+	}
+}
+
+.user-selector {
+	@include flex(column, flex-start, flex-start);
+	box-sizing: border-box;
+	padding: 0 10%;
+	
+	form {
+		@include flex(row, flex-start, center);
+		height: 44px;
+		width: 100%;
+		background-color: white;
+		border-radius: 200px;
+		
+		input {
+			flex-grow: 1;
+			background-color: transparent;
+			border: none;
+			font-size: 16px;
+			border-radius: 200px;
+			outline: none;
+			padding: 0 20px;
+			height: 100%;
+			margin-right: 12px;
+			
+			&:active, &:focus {
+				outline: none;
+				border: none;
+			}
+		}
+		
+		button {
+			@include flex(column, center, center);
+			padding: 0;
+			border: none;
+			background-color: $g-purple;
+			width: 44px;
+			height: 44px;
+			border-radius: 100%;
+			box-shadow: -5px 0 5px -5px rgba(0, 0, 0, 0.25);
+			transition: all 0.2s ease;
+			
+			.search-icon {
+				width: 24px;
+				height: 24px;
+				fill: white;
+			}
+			
+			&:hover {
+				background-color: lighten($g-purple, 10%);
+				cursor: pointer;
+			}
+			
+			&:disabled {
+				background-color: $g-purple;
+				opacity: 0.5;
+				cursor: unset;
+			}
+		}
+	}
+	
+	.selected-users {
+		@include flex(row, flex-start, flex-start);
+		flex-wrap: wrap;
+		margin-top: 20px;
+		width: 100%;
+		
+		ul {
+			@include flex(row, flex-start, flex-start);
+			flex-wrap: wrap;
+			padding: 0;
+			margin: 0;
+			list-style: none;
+			width: 100%;
+			
+			li {
+				@include flex(row, center, center);
+				background-color: $g-purple;
+				color: white;
+				position: relative;
+				border-radius: 100px;
+				height: 25px;
+				padding: 4px 12px;
+				margin: 0 8px 8px 0;
+				list-style: none;
+				width: auto;
+				max-width: 100%;
+				transition: all 0.2s ease;
+				animation: user-selected 0.5s ease;
+				
+				.selected-user-email {
+					pointer-events: none;
+				}
+				
+				button {
+					@include flex(column, center, center);
+					padding: 0;
+					border: none;
+					background-color: transparent;
+					width: 25px;
+					height: 25px;
+					border-radius: 100%;
+					margin-left: 8px;
+					cursor: pointer;
+					
+					.close-icon {
+						width: 22px;
+						height: 22px;
+						fill: white;
+					}
+				}
+				
+				.selected-user-tooltip {
+					@include flex(column, flex-start, flex-start);
+					background-color: fade-out($g-purple, 0.5);
+					color: white;
+					border-radius: 10px;
+					font-size: 14px;
+					padding: 8px;
+					position: absolute;
+					top: calc(-100% - 8px);
+					left: 0;
+					opacity: 0;
+					pointer-events: none;
+					visibility: hidden;
+					transition: all 0.2s ease;
+					z-index: 1;
+				}
+				
+				&:hover {
+					background-color: lighten($g-purple, 10%);
+					
+					.selected-user-tooltip {
+						opacity: 1;
+						visibility: visible;
+					}
+				}
+			}
+		}
+	}
+	
+	.queried-user-list-container {
+		@include flex(column, flex-start, flex-start);
+		max-width: 100%;
+		width: 100%;
+		overflow-x: auto;
+		overflow-y: hidden;
+	}
+	
+	table.queried-user-list {
+		width: 100%;
+		overflow: scroll;
+		border-collapse: separate;
+		border-spacing: 0 10px;
+		margin-top: 20px;
+		
+		@mixin tr-decoration($with-border: true) {
+			text-align: left;
+			padding: 0 10px;
+			height: 33px;
+			
+			@if $with-border {
+				&:not(:first-child) {
+					border-left: 1px solid white;
+				}
+			}
+			
+			&:first-child {
+				border-top-left-radius: 100px;
+				border-bottom-left-radius: 100px;
+			}
+			
+			&:last-child {
+				border-top-right-radius: 100px;
+				border-bottom-right-radius: 100px;
+			}
+		}
+		
+		thead {
+			color: white;
+			border-radius: 10%;
+			background-color: lighten($g-purple, 10%);
+			
+			th {
+				
+				@include tr-decoration;
+			}
+		}
+		
+		tbody {
+			tr {
+				background-color: white;
+				color: $g-purple;
+				transition: all 0.2s ease;
+				
+				td {
+					margin-top: 10px;
+					@include tr-decoration(false);
+				}
+				
+				&:hover {
+					background-color: lighten($g-purple, 50%);
+					cursor: pointer;
+				}
+			}
+		}
+	}
+}

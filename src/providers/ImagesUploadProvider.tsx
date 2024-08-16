@@ -108,10 +108,10 @@ export const ImagesUploadProvider = ({ children }: { children: React.ReactNode }
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        console.log('submit triggered');
         files.forEach(image => {
             console.info('Image:', image);
         });
+        console.log('User IDs:', userIds);
     }
 
     const deleteFile = (index: number) => {
