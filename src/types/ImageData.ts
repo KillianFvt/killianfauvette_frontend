@@ -1,8 +1,11 @@
 export type ImageData = {
-    id: number;
+    id?: number;
     name: string;
-    url: string;
-    uploaded: Date;
+    extension?: string;
+    url?: string;
+    blobUrl?: string;
     has_watermark: boolean;
     belongs_to: number[];
+    file?: File;
+    uploaded?: Date;
 }

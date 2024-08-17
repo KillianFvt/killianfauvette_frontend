@@ -1,6 +1,13 @@
 @import "../../styles/variables/colors.scss";
+@import "../../styles/mixins/gradient_button";
 
-.upload-images-form {
+.album-images-form {
+	
+	#save-button {
+		@include gradient-button();
+		width: 200px;
+	}
+	
 	form {
 		display: flex;
 		flex-direction: column;

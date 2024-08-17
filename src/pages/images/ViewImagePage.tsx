@@ -31,7 +31,7 @@ export const ViewImagePage = () => {
 
             {imageData &&
 	            <p>{
-                    `name : ${imageData?.name}, uploaded : ${imageData?.uploaded}, belongs_to : ${imageData.belongs_to}`
+                    `name : ${imageData?.name}, belongs_to : ${imageData.belongs_to}`
                 }</p>
             }
 
@@ -41,7 +41,7 @@ export const ViewImagePage = () => {
                 <p>Un problème est survenu.</p>
             ) : (
                 <div className={"image-container"}>
-                    <CDNImage url={imageData.url} name={imageData.name}/>
+                    <CDNImage url={imageData.url ?? ""} name={imageData.name}/>
                 </div>
             )}
         </div>

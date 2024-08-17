@@ -1,11 +1,12 @@
-import {useImagesUpload, ImagesUploadContextType} from "../../providers/ImagesUploadProvider";
-import {UploadImage} from "./UploadImage";
-import './UploadImageForm.scss';
+import './AlbumImagesForm.scss';
+import {useImagesUpload} from "../../providers/AlbumProvider";
+import {AlbumContextType} from "../../types/AlbumContextType";
+import {AlbumImageEdit} from "./AlbumImageEdit";
 import {ChangeEvent, useEffect, useState} from "react";
-import {NewImageData} from "../../types/NewImageData";
+import {ImageData} from "../../types/ImageData";
 import {UserSelector} from "../search/UserSelector";
 
-export const UploadImagesForm = () => {
+export const AlbumImagesForm = () => {
     const {
         files,
         userIds,
@@ -15,7 +16,7 @@ export const UploadImagesForm = () => {
         handleSubmit,
         updateAllFileWatermarks,
         updateAllFileNames,
-    }: ImagesUploadContextType = useImagesUpload();
+    }: AlbumContextType = useImagesUpload();
 
     const [isDragging, setIsDragging] = useState<boolean>(false);
     const handleAllFileNames = (e: ChangeEvent<HTMLTextAreaElement>) => {
@@ -46,8 +47,12 @@ export const UploadImagesForm = () => {
     }, []);
 
     return (
-        <div className={"upload-images-form"}>
-            <form onSubmit={handleSubmit}>
+        <div className={"album-images-form"}>
+            <UserSelector setUserIds={setUserIds} userIds={userIds}/>
+
+            <button id={'save-button'} type={"submit"} form={"album-images-form"}>Save</button>
+
+            <form onSubmit={handleSubmit} id={"album-images-form"}>
 
                 {files.length > 0 &&
 				    <div id={'all-files-modifications'}>
@@ -67,8 +72,8 @@ export const UploadImagesForm = () => {
 
                 <div className={"images-preview"}>
                     {
-                        files.map((file: NewImageData, index) => (
-                            <UploadImage key={index} index={index}/>
+                        files.map((file: ImageData, index: number) => (
+                            <AlbumImageEdit key={index} index={index}/>
                         ))
                     }
                 </div>
@@ -90,12 +95,7 @@ export const UploadImagesForm = () => {
                 >
                     {isDragging ? 'Drop here' : 'Drag and drop images here'}
                 </label>
-
-
-                <button type={"submit"}>Submit (fake)</button>
             </form>
-
-            <UserSelector setUserIds={setUserIds} userIds={userIds}/>
         </div>
     );
 };

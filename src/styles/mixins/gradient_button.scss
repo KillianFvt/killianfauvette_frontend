@@ -1,0 +1,66 @@
+@import "../variables/colors";
+@import "fonts";
+
+@mixin gradient_button($gradient: photo-gradient()) {
+	@include comfortaa;
+	margin-top: 65px;
+	border-radius: 200px;
+	border: none;
+	outline: none;
+	background: $gradient;
+	color: white;
+	width: 80%;
+	height: 40px;
+	font-size: 18px;
+	z-index: 1;
+	align-self: center;
+	cursor: pointer;
+	position: relative;
+	transition: background 0.25s ease-in-out, transform 0.25s ease-in-out;
+	
+	&.disabled {
+		background: grey;
+		cursor: not-allowed;
+		transition: background 0.25s ease-in-out, transform 0.25s ease-in-out;
+	}
+	
+	&:hover {
+		transform: translate(0, -2.5px);
+	}
+	
+	&:active {
+		transform: translate(0, 0px);
+	}
+	
+	&::after {
+		content: '';
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		background: $gradient;
+		top: 0;
+		left: 0;
+		z-index: -1;
+		border-radius: 200px;
+		transition: transform 0.25s ease-in-out, filter 0.25s ease-in-out;
+		transform: translate(0);
+		filter: blur(10px);
+	}
+	
+	&:hover::after {
+		transform: translate(0, 2.5px);
+	}
+	
+	&:active::after {
+		transform: translate(0, 0px);
+		filter: blur(5px);
+	}
+	
+	&.disabled:hover,
+	&.disabled:active,
+	&.disabled::after {
+		transform: translate(0, 0);
+		background: grey;
+		filter: none;
+	}
+}

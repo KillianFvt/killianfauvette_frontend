@@ -1,19 +1,20 @@
-import {ImagesUploadContextType, useImagesUpload} from "../../providers/ImagesUploadProvider";
+import {useImagesUpload} from "../../providers/AlbumProvider";
 import {ChangeEvent} from "react";
 import {ReactComponent as DeleteIcon} from "../../assets/icons/delete_icon.svg";
-import './UploadImage.scss';
+import './AlbumImageEdit.scss';
+import {AlbumContextType} from "../../types/AlbumContextType";
 
-interface UploadImageProps {
+interface AlbumImageEditProps {
     index: number;
 }
 
-export const UploadImage = ({ index } : UploadImageProps) => {
+export const AlbumImageEdit = ({ index } : AlbumImageEditProps) => {
     const {
         files,
         updateFileName,
         updateFileWatermark,
         deleteFile,
-    }: ImagesUploadContextType = useImagesUpload();
+    }: AlbumContextType = useImagesUpload();
 
     const handleFileNameChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
         let newFileName: string = e.target.value.replaceAll('\n', '');
@@ -32,7 +33,7 @@ export const UploadImage = ({ index } : UploadImageProps) => {
     }
 
     return (
-        <div className={"upload-image"}>
+        <div className={"album-image-edit"}>
             <button className={"delete-img-btn"} onClick={handleDeleteFile(index)}>
                 <DeleteIcon className={"delete-icon"}/>
             </button>
@@ -41,7 +42,7 @@ export const UploadImage = ({ index } : UploadImageProps) => {
                 <img src={files[index].blobUrl} alt={files[0].name}/>
             </div>
 
-            <div className={"upload-image-inputs"}>
+            <div className={"album-image-edit-inputs"}>
                 <textarea
                     className={"file-name-input"}
                     value={files[index].name}

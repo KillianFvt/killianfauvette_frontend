@@ -1,23 +1,8 @@
-import React, {ChangeEvent, createContext, Dispatch, SetStateAction, useContext, useState} from "react";
-import {NewImageData} from "../types/NewImageData";
+import React, {ChangeEvent, createContext, useContext, useState} from "react";
+import {ImageData} from "../types/ImageData";
+import {AlbumContextType} from "../types/AlbumContextType";
 
-export interface ImagesUploadContextType {
-    files: NewImageData[];
-    setFiles: Dispatch<SetStateAction<NewImageData[]>>;
-    userIds: number[];
-    setUserIds: Dispatch<SetStateAction<number[]>>;
-    handleFiles: (files: FileList) => void;
-    handleFileChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-    handleDrop: (event: React.DragEvent<HTMLLabelElement>) => void;
-    handleSubmit: (e: React.FormEvent) => void;
-    updateFileName: (index: number, fileName: string) => void;
-    updateAllFileNames: (fileName: string) => void;
-    updateFileWatermark: (index: number, hasWatermark: boolean) => void;
-    updateAllFileWatermarks: (hasWatermark: boolean) => void;
-    deleteFile: (index: number) => void;
-}
-
-const ImagesUploadContext = createContext<ImagesUploadContextType>({
+const AlbumContext = createContext<AlbumContextType>({
     files: [],
     setFiles: () => {},
     userIds: [],
@@ -33,18 +18,19 @@ const ImagesUploadContext = createContext<ImagesUploadContextType>({
     deleteFile: () => {},
 });
 
-export const ImagesUploadProvider = ({ children }: { children: React.ReactNode }) => {
-    const [files, setFiles] = useState<NewImageData[]>([]);
+export const AlbumProvider = ({ children }: { children: React.ReactNode }) => {
+    const [files, setFiles] = useState<ImageData[]>([]);
     const [userIds, setUserIds] = useState<number[]>([]);
 
     const handleFiles = (files: FileList) => {
-        const newImages : NewImageData[] = Array.from(files).map(file => ({
+        const newImages : ImageData[] = Array.from(files).map(file => ({
             file: file,
             name: file.name.split('.').slice(0, -1).join('.'),
             extension: file.name.split('.').pop() || '',
             blobUrl: URL.createObjectURL(file),
             has_watermark: false,
-            belongs_to: []
+            belongs_to: [],
+            url: ''
         }));
         setFiles(prevImages => [...prevImages, ...newImages]);
     };
@@ -69,8 +55,8 @@ export const ImagesUploadProvider = ({ children }: { children: React.ReactNode }
     };
 
     const updateAllFileNames = (fileName: string) => {
-        setFiles((prevImages: NewImageData[]) => {
-            const newImages: NewImageData[] = [...prevImages];
+        setFiles((prevImages: ImageData[]) => {
+            const newImages: ImageData[] = [...prevImages];
 
             if (fileName) {
                 const totalFiles: number = newImages.length;
@@ -81,8 +67,8 @@ export const ImagesUploadProvider = ({ children }: { children: React.ReactNode }
                     newImages[i].name = `${fileName}-${paddedIndex}`;
                 }
             } else {
-                newImages.forEach((image: NewImageData) => {
-                    return image.name = image.file.name.split('.').slice(0, -1).join('.');
+                newImages.forEach((image: ImageData) => {
+                    return image.name = image.file!.name.split('.').slice(0, -1).join('.');
                 });
             }
 
@@ -138,9 +124,9 @@ export const ImagesUploadProvider = ({ children }: { children: React.ReactNode }
         deleteFile,
     };
 
-    return <ImagesUploadContext.Provider value={value}>{children}</ImagesUploadContext.Provider>;
+    return <AlbumContext.Provider value={value}>{children}</AlbumContext.Provider>;
 };
 
 export const useImagesUpload = () => {
-    return useContext(ImagesUploadContext);
+    return useContext(AlbumContext);
 }

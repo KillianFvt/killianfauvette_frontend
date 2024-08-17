@@ -1,14 +1,14 @@
 import './UploadImagesPage.scss';
-import {UploadImagesForm} from "../../components/image/UploadImagesForm";
-import {ImagesUploadProvider} from "../../providers/ImagesUploadProvider";
+import {AlbumImagesForm} from "../../components/image/AlbumImagesForm";
+import {AlbumProvider} from "../../providers/AlbumProvider";
 
 export const UploadImagesPage = () => {
     return (
-        <ImagesUploadProvider>
+        <AlbumProvider>
             <div className="upload-images-page">
                 <h1>Upload images</h1>
-                <UploadImagesForm/>
+                <AlbumImagesForm/>
             </div>
-        </ImagesUploadProvider>
+        </AlbumProvider>
     );
 };
