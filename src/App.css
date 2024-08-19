@@ -4,6 +4,21 @@ html {
 
 body {
   padding-top: 72px;
+  min-height: calc(100vh - 72px);
+  display: flex;
+  flex-direction: column;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.App {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
 }
 
 /*# sourceMappingURL=App.css.map */
