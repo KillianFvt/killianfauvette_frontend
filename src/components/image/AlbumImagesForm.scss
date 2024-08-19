@@ -3,9 +3,24 @@
 
 .album-images-form {
 	
-	#save-button {
-		@include gradient-button();
-		width: 200px;
+	.album-details-forms {
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-start;
+		align-items: center;
+		
+		background-color: white;
+		padding: 24px 0;
+		
+		.user-selector {
+			width: 100%;
+		}
+		
+		#save-button {
+			@include gradient-button();
+			width: 200px;
+		}
 	}
 	
 	form {

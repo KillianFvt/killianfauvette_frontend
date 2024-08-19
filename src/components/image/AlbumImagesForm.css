@@ -1,7 +1,19 @@
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&family=Cormorant+SC:wght@300;400;500;600;700&family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap");
-.album-images-form #save-button {
+.album-images-form .album-details-forms {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: white;
+  padding: 24px 0;
+}
+.album-images-form .album-details-forms .user-selector {
+  width: 100%;
+}
+.album-images-form .album-details-forms #save-button {
   font-family: "Comfortaa", sans-serif;
   margin-top: 65px;
   border-radius: 200px;
@@ -19,18 +31,18 @@
   transition: background 0.25s ease-in-out, transform 0.25s ease-in-out;
   width: 200px;
 }
-.album-images-form #save-button.disabled {
+.album-images-form .album-details-forms #save-button.disabled {
   background: grey;
   cursor: not-allowed;
   transition: background 0.25s ease-in-out, transform 0.25s ease-in-out;
 }
-.album-images-form #save-button:hover {
+.album-images-form .album-details-forms #save-button:hover {
   transform: translate(0, -2.5px);
 }
-.album-images-form #save-button:active {
+.album-images-form .album-details-forms #save-button:active {
   transform: translate(0, 0px);
 }
-.album-images-form #save-button::after {
+.album-images-form .album-details-forms #save-button::after {
   content: "";
   position: absolute;
   width: 100%;
@@ -44,14 +56,14 @@
   transform: translate(0);
   filter: blur(10px);
 }
-.album-images-form #save-button:hover::after {
+.album-images-form .album-details-forms #save-button:hover::after {
   transform: translate(0, 2.5px);
 }
-.album-images-form #save-button:active::after {
+.album-images-form .album-details-forms #save-button:active::after {
   transform: translate(0, 0px);
   filter: blur(5px);
 }
-.album-images-form #save-button.disabled:hover, .album-images-form #save-button.disabled:active, .album-images-form #save-button.disabled::after {
+.album-images-form .album-details-forms #save-button.disabled:hover, .album-images-form .album-details-forms #save-button.disabled:active, .album-images-form .album-details-forms #save-button.disabled::after {
   transform: translate(0, 0);
   background: grey;
   filter: none;

@@ -6,7 +6,6 @@ export const UploadImagesPage = () => {
     return (
         <AlbumProvider>
             <div className="upload-images-page">
-                <h1>Upload images</h1>
                 <AlbumImagesForm/>
             </div>
         </AlbumProvider>

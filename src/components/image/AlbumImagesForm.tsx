@@ -48,9 +48,11 @@ export const AlbumImagesForm = () => {
 
     return (
         <div className={"album-images-form"}>
-            <UserSelector setUserIds={setUserIds} userIds={userIds}/>
+            <div className={'album-details-forms'}>
+                <UserSelector setUserIds={setUserIds} userIds={userIds}/>
 
-            <button id={'save-button'} type={"submit"} form={"album-images-form"}>Save</button>
+                <button id={'save-button'} type={"submit"} form={"album-images-form"}>Save</button>
+            </div>
 
             <form onSubmit={handleSubmit} id={"album-images-form"}>
 
