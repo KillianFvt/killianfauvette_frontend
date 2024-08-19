@@ -2,9 +2,10 @@ import './AlbumImagesForm.scss';
 import {useImagesUpload} from "../../providers/AlbumProvider";
 import {AlbumContextType} from "../../types/AlbumContextType";
 import {AlbumImageEdit} from "./AlbumImageEdit";
-import {ChangeEvent, useEffect, useState} from "react";
+import {ChangeEvent, useEffect, useRef, useState} from "react";
 import {ImageData} from "../../types/ImageData";
 import {UserSelector} from "../search/UserSelector";
+import Masonry from "react-masonry-css";
 
 export const AlbumImagesForm = () => {
     const {
@@ -19,6 +20,7 @@ export const AlbumImagesForm = () => {
     }: AlbumContextType = useImagesUpload();
 
     const [isDragging, setIsDragging] = useState<boolean>(false);
+
     const handleAllFileNames = (e: ChangeEvent<HTMLTextAreaElement>) => {
         let newFileName: string = e.target.value.replaceAll('\n', '');
         newFileName = newFileName.replaceAll('\r', '');
@@ -26,9 +28,16 @@ export const AlbumImagesForm = () => {
         updateAllFileNames(newFileName);
         e.target.value = newFileName;
     }
+
     const handleAllFileWatermarks = (e: ChangeEvent<HTMLInputElement>) => {
         updateAllFileWatermarks(e.target.checked);
     }
+
+    const columnsBreakpoints = useRef({
+        default: 4,
+        1100: 3,
+        700: 2,
+    });
 
     useEffect(() => {
         const handleDragEnter = () => setIsDragging(true);
@@ -51,34 +60,41 @@ export const AlbumImagesForm = () => {
             <div className={'album-details-forms'}>
                 <UserSelector setUserIds={setUserIds} userIds={userIds}/>
 
-                <button id={'save-button'} type={"submit"} form={"album-images-form"}>Save</button>
+                {files.length > 0 &&
+		            <div id={'all-files-modifications'}>
+                    <textarea
+	                    name="all-file-names" id="all-file-names"
+                        form={"album-images-form"}
+	                    onChange={handleAllFileNames}
+                    />
+			            <label>
+				            <input
+					            type="checkbox" form={"album-images-form"}
+					            onChange={handleAllFileWatermarks}
+				            />
+				            All images have watermark
+			            </label>
+		            </div>
+                }
+
+                <button id={'save-button'} type={"submit"}
+                        form={"album-images-form"}
+                >Save</button>
             </div>
 
             <form onSubmit={handleSubmit} id={"album-images-form"}>
 
-                {files.length > 0 &&
-				    <div id={'all-files-modifications'}>
-                    <textarea
-	                    name="all-file-names" id="all-file-names"
-	                    onChange={handleAllFileNames}
-                    />
-					    <label>
-						    <input
-							    type="checkbox"
-							    onChange={handleAllFileWatermarks}
-						    />
-						    All images have watermark
-					    </label>
-				    </div>
-                }
-
-                <div className={"images-preview"}>
+                <Masonry
+                    className={"images-preview"}
+                    columnClassName={"images-preview-column"}
+                    breakpointCols={columnsBreakpoints.current}
+                >
                     {
                         files.map((file: ImageData, index: number) => (
                             <AlbumImageEdit key={index} index={index}/>
                         ))
                     }
-                </div>
+                </Masonry>
 
                 <input
                     type={"file"} multiple={true}

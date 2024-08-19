@@ -9,73 +9,14 @@
 		flex-direction: column;
 		justify-content: flex-start;
 		align-items: center;
+		margin-bottom: 25px;
+		border-bottom: $black 1px solid;
 		
 		background-color: white;
 		padding: 24px 0;
 		
 		.user-selector {
 			width: 100%;
-		}
-		
-		#save-button {
-			@include gradient-button();
-			width: 200px;
-		}
-	}
-	
-	form {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: flex-start;
-		
-		.images-preview {
-			display: flex;
-			flex-direction: column;
-			align-items: center;
-			justify-content: flex-start;
-		}
-		
-		.drop-zone {
-			$border-size: 5px;
-			
-			display: flex;
-			flex-direction: column;
-			align-items: center;
-			justify-content: center;
-			position: relative;
-			width: 80%;
-			height: 200px;
-			border-radius: 5px;
-			margin: 10px 0;
-			cursor: pointer;
-			background-color: darken($cream, 2%);
-			transition: all 0.3s;
-			
-			&:hover, &.dragging {
-				background-color: saturate($cream, 50%);
-			}
-			
-			&:before {
-				content: '';
-				position: absolute;
-				width: calc(100% + ($border-size * 2));
-				height: calc(100% + ($border-size * 2));
-				z-index: -1;
-				border-radius: 10px;
-				background: photo-gradient(135deg);
-				opacity: 0;
-				transition: all 0.3s;
-			}
-			
-			&:hover:before, &.dragging:before {
-				opacity: 1;
-			}
-			
-			p {
-				font-size: 1.2rem;
-				color: $black;
-			}
 		}
 		
 		#all-files-modifications {
@@ -100,16 +41,80 @@
 			}
 		}
 		
-		@media (min-width: 700px) {
-			.images-preview {
-				width: 100%;
-				max-width: 100%;
-				box-sizing: border-box;
-				padding: 5%;
-				flex-direction: row;
-				flex-wrap: wrap;
-				justify-content: space-around;
+		#save-button {
+			@include gradient-button();
+			width: 200px;
+		}
+	}
+	
+	form {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: flex-start;
+		
+		.images-preview {
+			$gutter: 7.5px;
+			display: flex;
+			width: 100%;
+			
+			.images-preview-column {
+				display: flex;
+				flex-direction: column;
+				background-clip: padding-box;
+				padding: 0 $gutter;
+				
+				& > * {
+					margin: $gutter 0;
+				}
 			}
+		}
+		
+		.drop-zone {
+			$border-size: 5px;
+			
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			position: relative;
+			width: 80%;
+			height: 200px;
+			border-radius: 5px;
+			margin: 10px 0;
+			cursor: pointer;
+			background-color: $cream;
+			outline: darken($cream, 10%) dashed $border-size;
+			transition: all 0.3s;
+			
+			&:hover, &.dragging {
+				background-color: saturate($cream, 50%);
+				outline-color: transparent;
+			}
+			
+			&:before {
+				content: '';
+				position: absolute;
+				width: calc(100% + ($border-size * 2));
+				height: calc(100% + ($border-size * 2));
+				z-index: -1;
+				border-radius: 10px;
+				background: photo-gradient(135deg);
+				opacity: 0;
+				transition: all 0.3s;
+			}
+			
+			&:hover:before, &.dragging:before {
+				opacity: 1;
+			}
+			
+			p {
+				font-size: 1.2rem;
+				color: $black;
+			}
+		}
+		
+		@media (min-width: 700px) {
 			
 			.drop-zone {
 				width: 50%;

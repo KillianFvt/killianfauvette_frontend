@@ -7,11 +7,32 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
+  margin-bottom: 25px;
+  border-bottom: #050505 1px solid;
   background-color: white;
   padding: 24px 0;
 }
 .album-images-form .album-details-forms .user-selector {
   width: 100%;
+}
+.album-images-form .album-details-forms #all-files-modifications {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.album-images-form .album-details-forms #all-files-modifications #all-file-names {
+  font-size: 1.2rem;
+  text-align: center;
+  color: #050505;
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px solid #050505;
+  margin: 10px 0;
+  max-width: 90%;
+  width: 90%;
+}
+.album-images-form .album-details-forms #all-files-modifications #all-file-names:focus {
+  outline: none;
 }
 .album-images-form .album-details-forms #save-button {
   font-family: "Comfortaa", sans-serif;
@@ -76,9 +97,16 @@
 }
 .album-images-form form .images-preview {
   display: flex;
+  width: 100%;
+}
+.album-images-form form .images-preview .images-preview-column {
+  display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
+  background-clip: padding-box;
+  padding: 0 7.5px;
+}
+.album-images-form form .images-preview .images-preview-column > * {
+  margin: 7.5px 0;
 }
 .album-images-form form .drop-zone {
   display: flex;
@@ -91,11 +119,13 @@
   border-radius: 5px;
   margin: 10px 0;
   cursor: pointer;
-  background-color: #f8ebe0;
+  background-color: #FAF0E8;
+  outline: #f1d5be dashed 5px;
   transition: all 0.3s;
 }
 .album-images-form form .drop-zone:hover, .album-images-form form .drop-zone.dragging {
   background-color: #ffefe3;
+  outline-color: transparent;
 }
 .album-images-form form .drop-zone:before {
   content: "";
@@ -115,35 +145,7 @@
   font-size: 1.2rem;
   color: #050505;
 }
-.album-images-form form #all-files-modifications {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-.album-images-form form #all-files-modifications #all-file-names {
-  font-size: 1.2rem;
-  text-align: center;
-  color: #050505;
-  background-color: transparent;
-  border: none;
-  border-bottom: 1px solid #050505;
-  margin: 10px 0;
-  max-width: 90%;
-  width: 90%;
-}
-.album-images-form form #all-files-modifications #all-file-names:focus {
-  outline: none;
-}
 @media (min-width: 700px) {
-  .album-images-form form .images-preview {
-    width: 100%;
-    max-width: 100%;
-    box-sizing: border-box;
-    padding: 5%;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-around;
-  }
   .album-images-form form .drop-zone {
     width: 50%;
     max-width: 600px;
