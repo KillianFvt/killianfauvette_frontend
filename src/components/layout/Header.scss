@@ -1,24 +1,14 @@
 @import "../../styles/mixins/fonts";
+@import "../../styles/mixins/flex";
 @import "../../styles/variables/colors";
-
-html {
-    background-image: radial-gradient(
-        circle at 50% 0%,
-        rgb(255, 248, 243) 0%,
-        $cream 100%
-    );
-    min-height: 100vh;
-}
 
 header {
     
     $header-height: 72px;
     
     @include comfortaa;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
+    @include flex(row, space-between, center);
+    
     position: fixed;
     top: 0;
     left: 0;
@@ -32,16 +22,26 @@ header {
     h2 {
         color: white;
         padding: 0;
-        font-size: 24px;
+        font-size: 1em;
         line-height: $header-height;
         margin: 0 0 0 24px;
+    }
+    
+    .user-infos {
+        @include flex(row, flex-end, center);
+        flex-wrap: wrap;
+        max-width: 50%;
+        
+        & > * {
+            margin-right: 7px;
+        }
     }
 }
 
 @media (min-width: 768px) {
     header {
         h2 {
-            font-size: 32px;
+            font-size: 1.5em;
         }
     }
     

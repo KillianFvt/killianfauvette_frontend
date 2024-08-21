@@ -1,0 +1,24 @@
+@import "../styles/mixins/flex";
+@import "../styles/mixins/fonts";
+
+.home-page {
+	@include flex(column, center, center);
+	@include comfortaa;
+	flex-grow: 1;
+	
+	text-align: center;
+	
+	h1 {
+		@include cormorant-sc-medium;
+		font-size: 2rem;
+		text-align: center;
+	}
+}
+
+@media (min-width: 768px) {
+	.home-page {
+		h1 {
+			font-size: 3rem;
+		}
+	}
+}

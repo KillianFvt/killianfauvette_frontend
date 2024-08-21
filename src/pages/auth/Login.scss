@@ -1,7 +1,15 @@
+@import "src/styles/variables/colors";
+
 .login-page {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
 	flex-grow: 1;
+	
+	background-image: radial-gradient(
+			circle at 50% 0%,
+			rgb(255, 248, 243) 0%,
+			$cream 100%
+	);
 }

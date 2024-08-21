@@ -1,5 +1,6 @@
 html {
   background-color: #FAF0E8;
+  min-height: 100vh;
 }
 
 body {

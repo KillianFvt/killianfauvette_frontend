@@ -8,6 +8,7 @@ import ProtectedRoute from "./components/layout/ProtectedRoute";
 import {Logout} from "./pages/auth/Logout";
 import {ViewImagePage} from "./pages/images/ViewImagePage";
 import {AlbumEditPage} from "./pages/images/AlbumEditPage";
+import {Home} from "./pages/Home";
 
 const API_URL: string = process.env.REACT_APP_API_URL!;
 const CDN_URL: string = process.env.REACT_APP_CDN_URL!;
@@ -19,7 +20,7 @@ const App = () => (
             <UserProvider>
                 <Routes>
                     <Route path={"/"} element={<Layout/>}>
-                        <Route path={""} element={<h1>HOME</h1>}/>
+                        <Route path={""} element={<Home/>}/>
                         <Route path={"login/"} element={<Login/>}/>
                         <Route path={"protected/"} element={<ProtectedRoute><p>Protected route</p></ProtectedRoute>}/>
                     </Route>

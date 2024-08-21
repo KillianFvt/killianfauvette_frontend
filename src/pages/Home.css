@@ -1,0 +1,27 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&family=Cormorant+SC:wght@300;400;500;600;700&family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap");
+.home-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-family: "Comfortaa", sans-serif;
+  flex-grow: 1;
+  text-align: center;
+}
+.home-page h1 {
+  font-family: "Cormorant SC", serif;
+  font-weight: 500;
+  font-style: normal;
+  font-size: 2rem;
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .home-page h1 {
+    font-size: 3rem;
+  }
+}
+
+/*# sourceMappingURL=Home.css.map */
