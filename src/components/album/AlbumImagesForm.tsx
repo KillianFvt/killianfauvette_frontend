@@ -1,11 +1,12 @@
 import './AlbumImagesForm.scss';
-import {useImagesUpload} from "../../providers/AlbumProvider";
+import {useAlbumEdit} from "../../providers/AlbumProvider";
 import {AlbumContextType} from "../../types/AlbumContextType";
 import {AlbumImageEdit} from "./AlbumImageEdit";
 import {ChangeEvent, useEffect, useRef, useState} from "react";
 import {ImageData} from "../../types/ImageData";
 import {UserSelector} from "../search/UserSelector";
 import Masonry from "react-masonry-css";
+import {AlbumDataEditor} from "./AlbumDataEditor";
 
 export const AlbumImagesForm = () => {
     const {
@@ -17,7 +18,7 @@ export const AlbumImagesForm = () => {
         handleSubmit,
         updateAllFileWatermarks,
         updateAllFileNames,
-    }: AlbumContextType = useImagesUpload();
+    }: AlbumContextType = useAlbumEdit();
 
     const [isDragging, setIsDragging] = useState<boolean>(false);
 
@@ -58,6 +59,9 @@ export const AlbumImagesForm = () => {
     return (
         <div className={"album-images-form"}>
             <div className={'album-details-forms'}>
+
+                <AlbumDataEditor/>
+
                 <UserSelector setUserIds={setUserIds} userIds={userIds}/>
 
                 {files.length > 0 &&

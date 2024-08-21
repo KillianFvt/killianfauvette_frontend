@@ -1,4 +1,4 @@
-import {useImagesUpload} from "../../providers/AlbumProvider";
+import {useAlbumEdit} from "../../providers/AlbumProvider";
 import {ChangeEvent} from "react";
 import {ReactComponent as DeleteIcon} from "../../assets/icons/delete_icon.svg";
 import './AlbumImageEdit.scss';
@@ -14,7 +14,7 @@ export const AlbumImageEdit = ({ index } : AlbumImageEditProps) => {
         updateFileName,
         updateFileWatermark,
         deleteFile,
-    }: AlbumContextType = useImagesUpload();
+    }: AlbumContextType = useAlbumEdit();
 
     const handleFileNameChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
         let newFileName: string = e.target.value.replaceAll('\n', '');

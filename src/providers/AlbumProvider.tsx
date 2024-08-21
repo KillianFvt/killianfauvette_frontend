@@ -1,12 +1,15 @@
 import React, {ChangeEvent, createContext, useContext, useState} from "react";
 import {ImageData} from "../types/ImageData";
 import {AlbumContextType} from "../types/AlbumContextType";
+import {AlbumData} from "../types/AlbumData";
 
 const AlbumContext = createContext<AlbumContextType>({
     files: [],
     setFiles: () => {},
     userIds: [],
     setUserIds: () => {},
+    albumData: {} as AlbumData,
+    setAlbumData: () => {},
     handleFiles: () => {},
     handleDrop: () => {},
     handleFileChange: () => {},
@@ -21,6 +24,12 @@ const AlbumContext = createContext<AlbumContextType>({
 export const AlbumProvider = ({ children }: { children: React.ReactNode }) => {
     const [files, setFiles] = useState<ImageData[]>([]);
     const [userIds, setUserIds] = useState<number[]>([]);
+    const [albumData, setAlbumData] = useState<AlbumData>({
+        title: 'Album sans titre',
+        description: '',
+        password: '',
+        password_accessible: false,
+    } as AlbumData);
 
     const handleFiles = (files: FileList) => {
         const newImages : ImageData[] = Array.from(files).map(file => ({
@@ -113,6 +122,8 @@ export const AlbumProvider = ({ children }: { children: React.ReactNode }) => {
         setFiles,
         userIds,
         setUserIds,
+        albumData,
+        setAlbumData,
         handleFiles,
         handleDrop,
         handleFileChange,
@@ -127,6 +138,6 @@ export const AlbumProvider = ({ children }: { children: React.ReactNode }) => {
     return <AlbumContext.Provider value={value}>{children}</AlbumContext.Provider>;
 };
 
-export const useImagesUpload = () => {
+export const useAlbumEdit = () => {
     return useContext(AlbumContext);
 }

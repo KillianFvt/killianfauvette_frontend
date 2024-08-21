@@ -1,5 +1,5 @@
 import './AlbumEditPage.scss';
-import {AlbumImagesForm} from "../../components/image/AlbumImagesForm";
+import {AlbumImagesForm} from "../../components/album/AlbumImagesForm";
 import {AlbumProvider} from "../../providers/AlbumProvider";
 
 export const AlbumEditPage = () => {
