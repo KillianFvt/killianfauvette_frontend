@@ -1,7 +1,9 @@
-import React, {ChangeEvent, createContext, useContext, useState} from "react";
+import React, {ChangeEvent, createContext, MouseEvent, useContext, useState} from "react";
 import {ImageData} from "../types/ImageData";
 import {AlbumContextType} from "../types/AlbumContextType";
 import {AlbumData} from "../types/AlbumData";
+import {useUser} from "./UserProvider";
+import {updloadAlbum} from "../methods/album/updloadAlbum";
 
 const AlbumContext = createContext<AlbumContextType>({
     files: [],
@@ -22,6 +24,7 @@ const AlbumContext = createContext<AlbumContextType>({
 });
 
 export const AlbumProvider = ({ children }: { children: React.ReactNode }) => {
+    const { checkTokenExpiration, reloadUser } = useUser();
     const [files, setFiles] = useState<ImageData[]>([]);
     const [userIds, setUserIds] = useState<number[]>([]);
     const [albumData, setAlbumData] = useState<AlbumData>({
@@ -83,7 +86,7 @@ export const AlbumProvider = ({ children }: { children: React.ReactNode }) => {
 
             return newImages;
         });
-};
+    };
 
     const updateFileWatermark = (index: number, hasWatermark: boolean) => {
         setFiles(prevImages => {
@@ -101,19 +104,22 @@ export const AlbumProvider = ({ children }: { children: React.ReactNode }) => {
         });
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-        files.forEach(image => {
-            console.info('Image:', image);
-        });
-        console.log('User IDs:', userIds);
-    }
-
     const deleteFile = (index: number) => {
         setFiles(prevImages => {
             const newImages = [...prevImages];
             newImages.splice(index, 1);
             return newImages;
+        });
+    }
+
+    const handleSubmit = async (e: MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+
+        await updloadAlbum({
+            images: files,
+            setImages: setFiles,
+            checkTokenExpiration: checkTokenExpiration,
+            reloadUser: reloadUser,
         });
     }
 

@@ -1,5 +1,5 @@
 import {useAlbumEdit} from "../../providers/AlbumProvider";
-import {ChangeEvent} from "react";
+import {ChangeEvent, MouseEvent } from "react";
 import { ReactComponent as PasswordIcon } from "../../assets/icons/password_icon.svg";
 import './AlbumDataEditor.scss';
 
@@ -42,7 +42,7 @@ export const AlbumDataEditor = () => {
         });
     }
 
-    const handlePasswordRandom = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const handlePasswordRandom = (e: MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
         setAlbumData(prevData => {
             return {

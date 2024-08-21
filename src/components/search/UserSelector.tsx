@@ -26,7 +26,6 @@ export const UserSelector = ({ setUserIds, userIds }: userSelectorProps) => {
         if (!query) return;
 
         if (checkTokenExpiration()) {
-            console.log('Token expired, refreshing');
             await reloadUser();
         }
 

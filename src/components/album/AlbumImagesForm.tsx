@@ -81,12 +81,13 @@ export const AlbumImagesForm = () => {
 		            </div>
                 }
 
-                <button id={'save-button'} type={"submit"}
-                        form={"album-images-form"}
+                <button
+                    id={'save-button'} onClick={handleSubmit}
+                    type={'button'}
                 >Save</button>
             </div>
 
-            <form onSubmit={handleSubmit} id={"album-images-form"}>
+            <form id={"album-images-form"}>
 
                 <Masonry
                     className={"images-preview"}
